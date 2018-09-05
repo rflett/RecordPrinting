@@ -1,4 +1,5 @@
 import tkinter as tk
+import csv
 
 
 def main():
@@ -37,6 +38,59 @@ def create_from_input():
 
 def create_from_range():
     pass
+
+
+def csv_to_dict(csv_filename: str) -> dict:
+    # convert csv file to dictionary for use in creating printable records
+
+    ret_record_dict = {}
+
+    with open(csv_filename) as csv_file:
+        reader_obj = csv.reader(csv_file)
+
+        for row in reader_obj:
+            record_data = {}
+            if reader_obj.line_num == 1:
+                headers = row
+                continue
+            for i in range(len(row)):
+                if row[i] == "":
+                    continue
+                elif i == 13 or i == 18 or i == 18:
+                    row[i] = multi_entry_field(row[i])
+                record_data[headers[i]] = row[i]
+            ret_record_dict[row[6]] = record_data
+
+    return ret_record_dict
+
+
+def create_html_record(catalogue_number: str) -> str:
+    pass
+
+
+def multi_entry_field(field: str) -> list:
+    # split field for readability
+
+    ret_entry_list = []
+    entry_list = field.split("|")
+
+    for entry in entry_list:
+        attributes = entry.split(";")
+
+        entry_dict = {}
+        for attribute in attributes:
+            attribute_split = attribute.split(":")
+
+            attribute_split[0]
+            attribute_split[1].strip()
+            k, v = attribute_split[0].strip(), attribute_split[1].strip()
+            if v == "":
+                continue
+            entry_dict.update({k: v})
+
+        ret_entry_list.append(entry_dict)
+
+    return ret_entry_list
 
 
 if __name__ == "__main__":
