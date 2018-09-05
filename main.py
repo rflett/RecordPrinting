@@ -1,6 +1,8 @@
 import tkinter as tk
+from tkinter.filedialog import askopenfilename
 import csv
 
+record_dict = {}
 
 def main():
     root = tk.Tk()
@@ -29,7 +31,9 @@ def main():
 
 
 def csv_import():
-    pass
+    filename = askopenfilename()
+    global record_dict
+    record_dict = csv_to_dict(filename)
 
 
 def create_from_input():
@@ -56,7 +60,7 @@ def csv_to_dict(csv_filename: str) -> dict:
             for i in range(len(row)):
                 if row[i] == "":
                     continue
-                elif i == 13 or i == 18 or i == 18:
+                elif i == 13 or i == 18 or i == 28:
                     row[i] = multi_entry_field(row[i])
                 record_data[headers[i]] = row[i]
             ret_record_dict[row[6]] = record_data
@@ -81,12 +85,11 @@ def multi_entry_field(field: str) -> list:
         for attribute in attributes:
             attribute_split = attribute.split(":")
 
-            attribute_split[0]
-            attribute_split[1].strip()
-            k, v = attribute_split[0].strip(), attribute_split[1].strip()
-            if v == "":
+            if attribute_split[1] == " " or attribute_split[1] == "":
                 continue
-            entry_dict.update({k: v})
+
+            k, v = attribute_split[0].strip(), attribute_split[1].strip()
+            entry_dict[k] = [v][0]
 
         ret_entry_list.append(entry_dict)
 
