@@ -1,5 +1,6 @@
 import tkinter as tk
 
+
 def main():
     root = tk.Tk()
     root.title("Victorian Collections Record PDF Creation")
@@ -8,7 +9,7 @@ def main():
     status_frame.pack()
 
     status_message_list = []
-    status_message = tk.Text(status_frame, wrap=WORD, height=10, width=60, bd=3)
+    status_message = tk.Text(status_frame, wrap=tk.WORD, height=10, width=60, bd=3)
     status_message.pack()
 
     button_frame = tk.Frame(root)
@@ -22,6 +23,8 @@ def main():
 
     create_range_button = tk.Button(button_frame, text='Create Multiple', command=create_from_range)
     create_range_button.pack(side=tk.LEFT, padx=5, pady=5)
+
+    root.mainloop()
 
 
 def csv_import():
