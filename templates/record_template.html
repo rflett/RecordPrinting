@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <style>
+          h1 {
+          font-family: "Arial";
+          }
+          .header {
+               text-align: right;
+               border-right: 1px solid black;
+          }
+
+          table {
+              border-collapse: collapse;
+              width: 100%;
+          }
+
+          th, td {
+              padding: 8px;
+              text-align: left;
+              border-bottom: 1px solid black;
+              font-family: "Arial";
+              font-size: 16px;
+          }
+    </style>
+    <meta charset="UTF-8">
+    <title>Catalogue Record {{ record[0].data }}</title>
+<body>
+<div>
+    <div align="left" style="display: inline-block;">
+        <h1>Cataloguing Record</h1>
+    </div>
+    <div align="right" style="display: inline-block; float: right">
+        <h1>{{ record[0].data }}</h1>
+    </div>
+</div>
+<div style="border-top: 2px solid black">
+  <table width="100%">
+    {% for data in record %}
+    <tr>
+      <th class="header">{{ data.header }}</th>
+      <td>{{ data.data }}</td>
+    {% endfor %}
+  </table>
+</div>
+</body>
