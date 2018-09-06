@@ -1,12 +1,41 @@
+import os
 import csv
+import pdfkit
+from jinja2 import FileSystemLoader, Environment
 
 
-def create_pdf_record(html_record: str):
-    pass
+def create_pdf_record(catalogue_number: str, html_record: str):
+    if not os.path.exists(os.path.join(".", "records")):
+        os.mkdir(os.path.join(".", "records"))
+    pdfkit.from_string(html_record, os.path.join(".", "records", f"{catalogue_number}.pdf"))
 
 
-def create_html_record(catalogue_number: str) -> str:
-    pass
+def create_html_record(catalogue_number: str, record_dictionary: dict) -> str:
+
+    ret_record = ""
+    record = []
+
+    # use print order list to order how fields are displayed
+    for title in print_order:
+        entry = {}
+
+        try:
+            entry['header'] = print_headers[title]
+
+            if type(record_dictionary[catalogue_number][title]) == list:
+                entry['data'] = multi_entry_field_html_format(record_dictionary[catalogue_number][title])
+            else:
+                entry['data'] = record_dictionary[catalogue_number][title]
+            record.append(entry)
+        except KeyError:
+            pass
+
+    file_loader = FileSystemLoader('templates')
+    env = Environment(loader=file_loader)
+    template = env.get_template('record_template.html')
+    ret_record = template.render(record=record)
+    print(f"{ret_record}")
+    return ret_record
 
 
 def csv_to_dict(csv_filename: str) -> dict:
@@ -55,6 +84,24 @@ def multi_entry_field(field: str) -> list:
         ret_entry_list.append(entry_dict)
 
     return ret_entry_list
+
+
+def multi_entry_field_html_format(entry_list: list) -> str:
+    # format multi entry field for html display
+    ret_field = ""
+
+    field_list = []
+    for entry in entry_list:
+        attribute_list = []
+        for k, v in entry.items():
+            attribute = f"{k}: {v}"
+            attribute_list.append(attribute)
+        entry_string = " ; ".join(attribute_list)
+        field_list.append(entry_string)
+
+    ret_field = "<br>".join(field_list)
+    return ret_field
+
 
 
 print_headers = {

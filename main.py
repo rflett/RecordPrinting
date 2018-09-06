@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import simpledialog
 from tkinter.filedialog import askopenfilename
 import record_creation
 
@@ -39,7 +40,15 @@ class MainApplication:
         self.status_message.insert(tk.INSERT, "Done.")
 
     def create_from_input(self):
-        pass
+        user_input = simpledialog.askstring("Create Record", "Enter catalogue number", parent=root)
+        if user_input is None:
+            return
+        self.status_message.delete(1.0, tk.END)
+        self.status_message.insert(tk.INSERT, 'Creating record %s ...\n' % user_input)
+        self.parent.update()
+        record_html = record_creation.create_html_record(user_input, self.record_dict)
+        record_creation.create_pdf_record(user_input, record_html)
+        self.status_message.insert(tk.INSERT, 'Record created.')
 
     def create_from_range(self):
         pass
