@@ -40,18 +40,57 @@ class MainApplication:
         self.status_message.insert(tk.INSERT, "Done.")
 
     def create_from_input(self):
-        user_input = simpledialog.askstring("Create Record", "Enter catalogue number", parent=root)
+        user_input = simpledialog.askstring("Create Record", "Enter catalogue number", parent=self.parent)
         if user_input is None:
             return
         self.status_message.delete(1.0, tk.END)
-        self.status_message.insert(tk.INSERT, 'Creating record %s ...\n' % user_input)
+
+        if user_input not in self.record_dict.keys():
+            self.status_message.insert(tk.INSERT, f"Error: Record {user_input} does not exist.")
+            return
+
+        self.status_message.insert(tk.INSERT, f'Creating record {user_input} ...\n')
         self.parent.update()
+
         record_html = record_creation.create_html_record(user_input, self.record_dict)
         record_creation.create_pdf_record(user_input, record_html)
+
         self.status_message.insert(tk.INSERT, 'Record created.')
 
     def create_from_range(self):
-        pass
+        input_range_start = simpledialog.askstring("Starting Range", "Enter starting catalogue number", parent=self.parent)
+        if input_range_start is None:
+            return
+        input_range_end = simpledialog.askstring("Ending Range", "Enter ending catalogue number", parent=self.parent)
+        if input_range_end is None:
+            return
+
+        self.status_message.delete(1.0, tk.END)
+
+        if input_range_start not in self.record_dict.keys():
+            self.status_message.insert(tk.INSERT, f"Error: Record {input_range_start} does not exist.")
+            self.parent.update()
+            return
+        elif input_range_end not in self.record_dict.keys():
+            self.status_message.insert(tk.INSERT, f"Error: Record {input_range_end} does not exist.")
+            self.parent.update()
+            return
+
+        record_list = list(self.record_dict)
+        try:
+            record_list_slice = record_list[record_list.index(input_range_start):record_list.index(input_range_end) + 1]
+        except ValueError as err:
+            self.status_message.insert(tk.INSERT, f"Error: {err}")
+            self.parent.update()
+            return
+
+        for count, record in enumerate(record_list_slice):
+            self.status_message.insert(tk.INSERT, f"Creating record {record}. ({count + 1}/{len(record_list_slice)})\n")
+            self.parent.update()
+            record_html = record_creation.create_html_record(record, self.record_dict)
+            record_creation.create_pdf_record(record, record_html)
+
+        self.status_message.insert(tk.INSERT, "Record creation complete.")
 
 
 if __name__ == "__main__":

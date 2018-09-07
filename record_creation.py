@@ -33,8 +33,8 @@ def create_html_record(catalogue_number: str, record_dictionary: dict) -> str:
     file_loader = FileSystemLoader('templates')
     env = Environment(loader=file_loader)
     template = env.get_template('record_template.html')
+
     ret_record = template.render(record=record)
-    print(f"{ret_record}")
     return ret_record
 
 
