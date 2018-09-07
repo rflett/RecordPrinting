@@ -16,11 +16,11 @@ class MainApplication:
         self.status_frame = tk.Frame(parent, padx=10, pady=10)
         self.status_frame.pack()
 
+        self.status_message = tk.Text(self.status_frame, wrap=tk.WORD, height=10, width=40, bd=3)
+        self.status_message.pack()
+
         self.button_frame = tk.Frame(self.parent)
         self.button_frame.pack(side=tk.BOTTOM)
-
-        self.status_message = tk.Text(self.status_frame, wrap=tk.WORD, height=30, width=80, bd=3)
-        self.status_message.pack()
 
         self.create_button = tk.Button(self.button_frame, text='Import CSV', command=self.csv_import)
         self.create_button.pack(side=tk.LEFT, padx=5, pady=5)
@@ -87,6 +87,7 @@ class MainApplication:
         for count, record in enumerate(record_list_slice):
             self.status_message.insert(tk.INSERT, f"Creating record {record}. ({count + 1}/{len(record_list_slice)})\n")
             self.parent.update()
+            self.status_message.yview_pickplace(tk.END)
             record_html = record_creation.create_html_record(record, self.record_dict)
             record_creation.create_pdf_record(record, record_html)
 
