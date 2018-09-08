@@ -74,9 +74,9 @@ def multi_entry_field(field: str) -> list:
 
         entry_dict = {}
         for attribute in attributes:
-            attribute_split = attribute.split(":")
+            attribute_split = str(attribute.split(":")).strip()
 
-            if attribute_split[1] == " " or attribute_split[1] == "":
+            if len(attribute_split[1]) == 0:
                 continue
 
             k, v = attribute_split[0].strip(), attribute_split[1].strip()
@@ -93,10 +93,7 @@ def multi_entry_field_html_format(entry_list: list) -> str:
 
     field_list = []
     for entry in entry_list:
-        attribute_list = []
-        for k, v in entry.items():
-            attribute = f"{k}: {v}"
-            attribute_list.append(attribute)
+        attribute_list = [f"{k}: {v}" for k, v in entry.items()]
         entry_string = " ; ".join(attribute_list)
         field_list.append(entry_string)
 
@@ -104,5 +101,5 @@ def multi_entry_field_html_format(entry_list: list) -> str:
     return ret_field
 
 
-def open_records_folder():
+def open_records_folder() -> None:
     os.system(f"explorer {os.path.abspath(os.path.join('.', 'records'))}")

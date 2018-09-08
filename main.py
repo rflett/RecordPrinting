@@ -48,7 +48,11 @@ class MainApplication:
         self.status_message.insert(tk.INSERT, "Done.")
 
     def create_from_input(self):
-        user_input = simpledialog.askstring("Create Record", "Enter catalogue number", parent=self.parent)
+        user_input = simpledialog.askstring(
+            title="Create Record",
+            prompt="Enter catalogue number",
+            parent=self.parent
+        )
         if user_input is None:
             return
         self.status_message.delete(1.0, tk.END)
@@ -66,10 +70,18 @@ class MainApplication:
         self.status_message.insert(tk.INSERT, 'Record created.')
 
     def create_from_range(self):
-        input_range_start = simpledialog.askstring("Starting Range", "Enter starting catalogue number", parent=self.parent)
+        input_range_start = simpledialog.askstring(
+            title="Starting Range",
+            prompt="Enter starting catalogue number",
+            parent=self.parent
+        )
         if input_range_start is None:
             return
-        input_range_end = simpledialog.askstring("Ending Range", "Enter ending catalogue number", parent=self.parent)
+        input_range_end = simpledialog.askstring(
+            title="Ending Range",
+            prompt="Enter ending catalogue number",
+            parent=self.parent
+        )
         if input_range_end is None:
             return
 
