@@ -16,7 +16,7 @@ class MainApplication:
         self.status_frame = tk.Frame(parent, padx=10, pady=10)
         self.status_frame.pack()
 
-        self.status_message = tk.Text(self.status_frame, wrap=tk.WORD, height=10, width=40, bd=3)
+        self.status_message = tk.Text(self.status_frame, wrap=tk.WORD, height=20, width=40, bd=3)
         self.status_message.pack()
 
         self.button_frame = tk.Frame(self.parent)
@@ -30,6 +30,9 @@ class MainApplication:
 
         self.create_range_button = tk.Button(self.button_frame, text='Create Multiple', command=self.create_from_range)
         self.create_range_button.pack(side=tk.LEFT, padx=5, pady=5)
+
+        self.open_folder_button = tk.Button(self.button_frame, text='Open Folder', command=self.open_folder)
+        self.open_folder_button.pack(side=tk.LEFT, padx=5, pady=5)
 
     def csv_import(self):
         filename = askopenfilename()
@@ -92,6 +95,9 @@ class MainApplication:
             record_creation.create_pdf_record(record, record_html)
 
         self.status_message.insert(tk.INSERT, "Record creation complete.")
+
+    def open_folder(self):
+        record_creation.open_records_folder()
 
 
 if __name__ == "__main__":

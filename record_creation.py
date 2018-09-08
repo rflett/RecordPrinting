@@ -103,6 +103,9 @@ def multi_entry_field_html_format(entry_list: list) -> str:
     return ret_field
 
 
+def open_records_folder():
+    os.system(f"explorer {os.path.abspath(os.path.join('.', 'records'))}")
+
 
 print_headers = {
         'id': 'ID: ',
