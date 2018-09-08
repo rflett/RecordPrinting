@@ -5,15 +5,13 @@ from jinja2 import FileSystemLoader, Environment
 from print_data import print_order, print_headers
 
 
-def create_pdf_record(catalogue_number: str, html_record: str):
+def create_pdf_record(catalogue_number: str, html_record: str) -> None:
     if not os.path.exists(os.path.join(".", "records")):
         os.mkdir(os.path.join(".", "records"))
     pdfkit.from_string(html_record, os.path.join(".", "records", f"{catalogue_number}.pdf"))
 
 
 def create_html_record(catalogue_number: str, record_dictionary: dict) -> str:
-
-    ret_record = ""
     record = []
 
     # use print order list to order how fields are displayed
@@ -65,7 +63,6 @@ def csv_to_dict(csv_filename: str) -> dict:
 
 def multi_entry_field(field: str) -> list:
     # split field for readability
-
     ret_entry_list = []
     entry_list = field.split("|")
 
@@ -74,9 +71,9 @@ def multi_entry_field(field: str) -> list:
 
         entry_dict = {}
         for attribute in attributes:
-            attribute_split = attribute.split(":")
+            attribute_split = str(attribute.split(":")).strip()
 
-            if attribute_split[1] == " " or attribute_split[1] == "":
+            if len(attribute_split[1]) == 0:
                 continue
 
             k, v = attribute_split[0].strip(), attribute_split[1].strip()
@@ -89,14 +86,9 @@ def multi_entry_field(field: str) -> list:
 
 def multi_entry_field_html_format(entry_list: list) -> str:
     # format multi entry field for html display
-    ret_field = ""
-
     field_list = []
     for entry in entry_list:
-        attribute_list = []
-        for k, v in entry.items():
-            attribute = f"{k}: {v}"
-            attribute_list.append(attribute)
+        attribute_list = [f"{k}: {v}" for k, v in entry.items()]
         entry_string = " ; ".join(attribute_list)
         field_list.append(entry_string)
 
@@ -104,5 +96,5 @@ def multi_entry_field_html_format(entry_list: list) -> str:
     return ret_field
 
 
-def open_records_folder():
+def open_records_folder() -> None:
     os.system(f"explorer {os.path.abspath(os.path.join('.', 'records'))}")
