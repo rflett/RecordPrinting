@@ -37,6 +37,11 @@ class MainApplication:
     def csv_import(self):
         filename = askopenfilename()
         self.status_message.delete(1.0, tk.END)
+
+        if not filename.endswith(".csv"):
+            self.status_message.insert(tk.INSERT, "Error: Invalid File")
+            return
+
         self.status_message.insert(tk.INSERT, "Importing CSV...\n")
         self.parent.update()
         self.record_dict = record_creation.csv_to_dict(filename)
