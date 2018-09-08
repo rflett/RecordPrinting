@@ -31,7 +31,7 @@ class MainApplication:
         self.create_range_button = tk.Button(self.button_frame, text='Create Multiple', command=self.create_from_range)
         self.create_range_button.pack(side=tk.LEFT, padx=5, pady=5)
 
-        self.open_folder_button = tk.Button(self.button_frame, text='Open Folder', command=record_creation.open_folder)
+        self.open_folder_button = tk.Button(self.button_frame, text='Open Folder', command=record_creation.open_records_folder)
         self.open_folder_button.pack(side=tk.LEFT, padx=5, pady=5)
 
     def csv_import(self):
