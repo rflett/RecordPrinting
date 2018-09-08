@@ -16,7 +16,7 @@ class MainApplication:
         self.status_frame = tk.Frame(parent, padx=10, pady=10)
         self.status_frame.pack()
 
-        self.status_message = tk.Text(self.status_frame, wrap=tk.WORD, height=20, width=40, bd=3)
+        self.status_message = tk.Text(self.status_frame, wrap=tk.WORD, height=20, width=60, bd=3)
         self.status_message.pack()
 
         self.button_frame = tk.Frame(self.parent)
