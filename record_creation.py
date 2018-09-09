@@ -49,9 +49,11 @@ def csv_to_dict(csv_filename: str) -> dict:
 
         for row in reader_obj:
             record_data = {}
+
             if reader_obj.line_num == 1:
                 headers = row
                 continue
+
             for i in range(len(row)):
                 if row[i] == "":
                     continue
@@ -123,3 +125,52 @@ condition_multi_entry_headers = ['Condition', 'DateChecked', 'CheckedBy_Name', '
 
 valuation_multi_entry_headers = ['ValuationAmount', 'DateValued', 'CheckedBy_Name', 'CheckedBy_Address',
                                  'CheckedBy_Phone', 'CheckedBy_Email', 'Comments']
+
+csv_headers = [
+    'id',
+    'DateTimeModified',
+    'DateTimeCreated',
+    'Keywords',
+    'Private',
+    'Identification_Name',
+    'Identification_RegistrationNumber',
+    'Identification_FormalTitle',
+    'Description_PhysicalDescription',
+    'Description_InscriptionsAndMarkings',
+    'Description_Size',
+    'Description_Materials',
+    'ManufactureDetails_DateMade',
+    'ManufactoreDetails_Makers',
+    'ManufactureDetails_PlaceMade',
+    'ManufactureDetails_PlaceMade_Comments',
+    'Context_HistoricalInformation',
+    'Context_HistoricalStatementOfSignificance',
+    'UsageDetails',
+    'AcquisitionDetails_HowAcquired',
+    'AcquisitionDetails_DateAcquired',
+    'AcquisitionDetails_Source_Name',
+    'AcquisitionDetails_Source_Address',
+    'AcquisitionDetails_Source_Phone',
+    'AcquisitionDetails_Source_Email',
+    'AcquisitionDetails_Acknowledgement',
+    'AcquisitionDetails_AcknowledgementDate',
+    'AcquisitionDetails_Comments',
+    'ConditionReports',
+    'Storage_RegularLocation',
+    'Storage_CurrentLocation_Location',
+    'Storage_CurrentLocation_DateMoved',
+    'Storage_CurrentLocation_TimeMoved',
+    'Storage_CurrentLocation_MovedBy',
+    'ValuationReports',
+    'Rights_CopyrightPermissions',
+    'Rights_CopyrightAcknowledgement',
+    'Rights_CopyrightResearch',
+    'Rights_CopyrightKnown',
+    'Rights_CopyrightCategory',
+    'Rights_CopyrightExpiry',
+    'Rights_CopyrightHolder_Name',
+    'Rights_CopyrightHolder_Address',
+    'Rights_CopyrightHolder_Phone',
+    'Rights_CopyrightHolder_Email',
+    'SupplementaryFile_HasSupplementaryFile',
+    'SupplementaryFile_SupplementaryFileLocation']
