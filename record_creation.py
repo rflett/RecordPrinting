@@ -82,12 +82,12 @@ def multi_entry_field(field: str, header_list: list) -> list:
 
         entry_dict = {}
         for attribute in attributes:
-            attribute_split = str(attribute.split(":")).strip()
+            attribute_split = [x.strip() for x in attribute.split(":")]
 
             if len(attribute_split[1]) == 0:
                 continue
 
-            k, v = attribute_split[0].strip(), attribute_split[1].strip()
+            k, v = attribute_split[0], attribute_split[1]
             entry_dict[k] = [v][0]
 
         ret_entry_list.append(entry_dict)
