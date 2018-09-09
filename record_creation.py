@@ -55,15 +55,23 @@ def csv_to_dict(csv_filename: str) -> dict:
             for i in range(len(row)):
                 if row[i] == "":
                     continue
-                elif i == 13 or i == 18 or i == 28:
-                    row[i] = multi_entry_field(row[i])
+
+                elif headers[i] == 'ManufactoreDetails_Makers':
+                    row[i] = multi_entry_field(row[i], maker_multi_entry_headers)
+                elif headers[i] == 'UsageDetails':
+                    row[i] = multi_entry_field(row[i], usage_multi_entry_headers)
+                elif headers[i] == 'ConditionReports':
+                    row[i] = multi_entry_field(row[i], condition_multi_entry_headers)
+                elif headers[i] == 'ValuationReports':
+                    row[i] = multi_entry_field(row[i], valuation_multi_entry_headers)
+
                 record_data[headers[i]] = row[i]
             ret_record_dict[row[6]] = record_data
 
     return ret_record_dict
 
 
-def multi_entry_field(field: str) -> list:
+def multi_entry_field(field: str, header_list: list) -> list:
     # split field for readability
 
     ret_entry_list = []
@@ -103,3 +111,15 @@ def multi_entry_field_html_format(entry_list: list) -> str:
 
 def open_records_folder() -> None:
     os.system(f"explorer {os.path.abspath(os.path.join('.', 'records'))}")
+
+
+maker_multi_entry_headers = ['Name', 'Contact_Name', 'Contact_Address',
+                             'Contact_Phone', 'Contact_Email', 'Role']
+
+usage_multi_entry_headers = ['Used By', 'Date Used', 'Usage Comments', 'Place Used']
+
+condition_multi_entry_headers = ['Condition', 'DateChecked', 'CheckedBy_Name', 'CheckedBy_Address',
+                                 'CheckedBy_Phone', 'CheckedBy_Email', 'Comments']
+
+valuation_multi_entry_headers = ['ValuationAmount', 'DateValued', 'CheckedBy_Name', 'CheckedBy_Address',
+                                 'CheckedBy_Phone', 'CheckedBy_Email', 'Comments']
