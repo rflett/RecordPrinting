@@ -42,7 +42,7 @@ def create_html_record(catalogue_number: str, record_dictionary: dict) -> str:
 def csv_to_dict(csv_filename: str) -> dict:
     # convert csv file to dictionary for use in creating printable records
 
-    ret_record_dict = {}
+    ret_record_dict = {"success": False}
 
     with open(csv_filename) as csv_file:
         reader_obj = csv.reader(csv_file)
@@ -52,6 +52,12 @@ def csv_to_dict(csv_filename: str) -> dict:
 
             if reader_obj.line_num == 1:
                 headers = row
+
+                for header in headers:
+                    if header not in csv_headers:
+                        ret_record_dict["error"] = f"Unexpected header in csv: {header}"
+                        return ret_record_dict
+
                 continue
 
             for i in range(len(row)):
@@ -70,6 +76,7 @@ def csv_to_dict(csv_filename: str) -> dict:
                 record_data[headers[i]] = row[i]
             ret_record_dict[row[6]] = record_data
 
+    ret_record_dict["success"] = True
     return ret_record_dict
 
 

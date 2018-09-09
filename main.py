@@ -53,7 +53,12 @@ class MainApplication:
         self.status_message.insert(tk.INSERT, "Importing CSV...\n")
         self.parent.update()
         self.record_dict = record_creation.csv_to_dict(filename)
-        self.status_message.insert(tk.INSERT, "Done.")
+
+        if not self.record_dict.get("success"):
+            self.status_message.insert(tk.INSERT, self.record_dict["error"])
+            return
+
+        self.status_message.insert(tk.INSERT, "Import Successful.")
 
     def create_from_input(self):
         user_input = simpledialog.askstring(
